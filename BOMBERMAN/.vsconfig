@@ -1,0 +1,28 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Bb]uild/
+[Oo]bj/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+# Archivos de configuración y caché
+*.csproj
+*.sln
+*.suo
+*.user
+*.unityproj
+*.pidb
+*.booproj
+*.svd
+
+# Archivos generados por Unity
+*.apk
+*.aab
+.DS_Store
+Thumbs.db
+
+# IDEs y editores
+.vscode/
+*.swp
