@@ -20,18 +20,22 @@ public class PlayerMovement : MonoBehaviour
         float movimientoX = Input.GetAxisRaw("Horizontal");
         float movimientoY = Input.GetAxisRaw("Vertical");
 
+        // Prioriza el movimiento horizontal sobre el vertical
+        if (movimientoX != 0)
+            movimientoY = 0;
+
         // Normaliza el movimiento para evitar que la velocidad diagonal sea mayor
         movimiento = new Vector2(movimientoX, movimientoY).normalized;
 
         // Enviar valores al Animator
         animator.SetBool("IsMoving", movimiento.magnitude > 0);
-        animator.SetFloat("MoveX", movimientoX);
-        animator.SetFloat("MoveY", movimientoY);
+        animator.SetFloat("MoveX", movimiento.x);
+        animator.SetFloat("MoveY", movimiento.y);
     }
 
     void FixedUpdate()
     {
-        // Mueve al jugador en la direcci�n indicada
+        // Mueve al jugador en la dirección indicada
         rb.linearVelocity = movimiento * velocidad;
     }
 }
