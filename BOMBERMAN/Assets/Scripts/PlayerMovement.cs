@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>(); // Obtiene el Animator
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -20,22 +20,30 @@ public class PlayerMovement : MonoBehaviour
         float movimientoX = Input.GetAxisRaw("Horizontal");
         float movimientoY = Input.GetAxisRaw("Vertical");
 
-        // Prioriza el movimiento horizontal sobre el vertical
+        // 🔥 **Evita combinaciones diagonales (prioriza última tecla presionada)**
         if (movimientoX != 0)
-            movimientoY = 0;
+            movimientoY = 0;  // Si se mueve en X, cancela Y
+        else if (movimientoY != 0)
+            movimientoX = 0;  // Si se mueve en Y, cancela X
 
-        // Normaliza el movimiento para evitar que la velocidad diagonal sea mayor
-        movimiento = new Vector2(movimientoX, movimientoY).normalized;
+        // Guarda la dirección de movimiento
+        movimiento = new Vector2(movimientoX, movimientoY);
 
-        // Enviar valores al Animator
-        animator.SetBool("IsMoving", movimiento.magnitude > 0);
-        animator.SetFloat("MoveX", movimiento.x);
-        animator.SetFloat("MoveY", movimiento.y);
+        // Si se mueve, actualiza animación correctamente
+        if (movimiento != Vector2.zero)
+        {
+            animator.SetBool("IsMoving", true);
+            animator.SetFloat("MoveX", movimiento.x);
+            animator.SetFloat("MoveY", movimiento.y);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
     }
 
     void FixedUpdate()
     {
-        // Mueve al jugador en la dirección indicada
-        rb.linearVelocity = movimiento * velocidad;
+        rb.velocity = movimiento * velocidad;
     }
 }
