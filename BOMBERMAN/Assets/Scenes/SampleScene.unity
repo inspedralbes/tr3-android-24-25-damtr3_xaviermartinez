@@ -6331,6 +6331,7 @@ GameObject:
   - component: {fileID: 1791387778}
   - component: {fileID: 1791387779}
   - component: {fileID: 1791387780}
+  - component: {fileID: 1791387781}
   m_Layer: 0
   m_Name: Personaje
   m_TagString: Untagged
@@ -6550,6 +6551,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1791387781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791387773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b5fd5262e2dc24a8217984955ab684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombaPrefab: {fileID: 3454238175121351527, guid: b8efac02dc6925b458be9391cdbbd1ae, type: 3}
+  tiempoDeVida: 3
 --- !u!1 &1978632033
 GameObject:
   m_ObjectHideFlags: 0
