@@ -29,8 +29,8 @@ public class ColocarBomba : MonoBehaviour
 
     private Vector2 AlinearAPosicion(Vector2 posicion)
     {
-        float x = Mathf.Round(posicion.x / tamañoCelda) * tamañoCelda;
-        float y = Mathf.Round(posicion.y / tamañoCelda) * tamañoCelda;
+        float x = Mathf.Floor(posicion.x / tamañoCelda) * tamañoCelda + tamañoCelda / 2;
+        float y = Mathf.Floor(posicion.y / tamañoCelda) * tamañoCelda + tamañoCelda / 2;
         return new Vector2(x, y);
     }
 }
