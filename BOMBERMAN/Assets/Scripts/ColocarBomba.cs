@@ -4,7 +4,7 @@ public class ColocarBomba : MonoBehaviour
 {
     public GameObject bombaPrefab;  // Prefab de la bomba
     public float tiempoDeVida = 3f; // Tiempo antes de explotar
-    public float tamañoCelda = 1f;  // Tamaño de cada celda del grid
+    public float tamañoCelda = 1f;  // Tamaño de la cuadrícula (DEBE ser igual al del personaje)
 
     void Update()
     {
@@ -16,15 +16,21 @@ public class ColocarBomba : MonoBehaviour
 
     void Colocar()
     {
-        // Redondea la posición del jugador al centro de la celda más cercana
+        // Ajusta la posición a la cuadrícula
         Vector3 posicionJugador = transform.position;
-        float xAjustado = Mathf.Round(posicionJugador.x / tamañoCelda) * tamañoCelda;
-        float yAjustado = Mathf.Round(posicionJugador.y / tamañoCelda) * tamañoCelda;
+        Vector2 posicionAlineada = AlinearAPosicion(posicionJugador);
 
         // Instancia la bomba en la posición ajustada
-        GameObject bomba = Instantiate(bombaPrefab, new Vector3(xAjustado, yAjustado, 0), Quaternion.identity);
+        GameObject bomba = Instantiate(bombaPrefab, posicionAlineada, Quaternion.identity);
 
         // Destruye la bomba después de un tiempo
         Destroy(bomba, tiempoDeVida);
+    }
+
+    private Vector2 AlinearAPosicion(Vector2 posicion)
+    {
+        float x = Mathf.Round(posicion.x / tamañoCelda) * tamañoCelda;
+        float y = Mathf.Round(posicion.y / tamañoCelda) * tamañoCelda;
+        return new Vector2(x, y);
     }
 }
