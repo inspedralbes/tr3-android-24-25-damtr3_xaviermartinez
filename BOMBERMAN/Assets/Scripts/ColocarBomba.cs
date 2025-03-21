@@ -3,14 +3,16 @@ using System.Collections;
 
 public class ColocarBomba : MonoBehaviour
 {
-    public GameObject bombaPrefab;     // Prefab de la bomba
-    public GameObject explosionPrefab; // Prefab de la explosión
-    public float tiempoDeVida = 3f;    // Tiempo antes de explotar
-    public float tamañoCelda = 1f;     // Tamaño de la cuadrícula
+    public GameObject bombaPrefab;       // Prefab de la bomba
+    public GameObject explosionPrefab;   // Prefab de la explosión
+    public float tiempoDeVida = 3f;      // Tiempo antes de explotar
+    public float tamañoCelda = 1f;       // Tamaño de la cuadrícula
+    private bool bombaActiva = false;    // Control para permitir solo una bomba a la vez
+    public LayerMask capaBomba;          // Capa de la bomba (para manejar colisión)
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !bombaActiva)
         {
             Colocar();
         }
@@ -23,6 +25,13 @@ public class ColocarBomba : MonoBehaviour
 
         // Instancia la bomba en la posición ajustada
         GameObject bomba = Instantiate(bombaPrefab, posicionAlineada, Quaternion.identity);
+        bombaActiva = true;  // Marca que hay una bomba activa
+
+        // Desactiva la colisión temporalmente entre el jugador y la bomba
+        Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+
+        // Vuelve a habilitar la colisión después de un pequeño tiempo (cuando el jugador se aleja)
+        StartCoroutine(ActivarColisionDespues(bomba));
 
         // Inicia la explosión después de tiempoDeVida
         StartCoroutine(Explosión(bomba, posicionAlineada));
@@ -35,12 +44,19 @@ public class ColocarBomba : MonoBehaviour
         return new Vector2(x, y);
     }
 
+    IEnumerator ActivarColisionDespues(GameObject bomba)
+    {
+        yield return new WaitForSeconds(0.5f);  // Espera para que el jugador se aleje
+        Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+    }
+
     IEnumerator Explosión(GameObject bomba, Vector2 posicion)
     {
         yield return new WaitForSeconds(tiempoDeVida);
 
-        // Destruye la bomba
+        // Destruye la bomba y habilita colocar una nueva
         Destroy(bomba);
+        bombaActiva = false;
 
         // Instancia la explosión en el centro
         Instantiate(explosionPrefab, posicion, Quaternion.identity);
