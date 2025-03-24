@@ -4,13 +4,15 @@ public class PlayerMovement : MonoBehaviour
 {
     public float velocidad = 5f;
     public float gridSize = 1f;
-    public LayerMask capaObstaculos;
+
+    // Ajuste: Cambiar por el Layer específico "BloquesDestruibles"
+    public LayerMask capaObstaculos; // Seleccionar desde Inspector el Layer 7 (BloquesDestruibles)
 
     private Vector2 destino;
     private bool enMovimiento = false;
     private Animator animator;
     private Rigidbody2D rb;
-    private BoxCollider2D boxCollider; // Se usa para obtener el tamaño del personaje
+    private BoxCollider2D boxCollider;
 
     void Start()
     {
@@ -55,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, destino, velocidad * Time.fixedDeltaTime);
 
-            if (Vector2.Distance(transform.position, destino) < 0.01f) // 🔹 Mejor precisión
+            if (Vector2.Distance(transform.position, destino) < 0.01f)
             {
-                transform.position = destino; // 🔹 Forzar alineación exacta
+                transform.position = destino;
                 enMovimiento = false;
                 animator.SetBool("IsMoving", false);
             }
@@ -66,16 +68,22 @@ public class PlayerMovement : MonoBehaviour
 
     private bool HayObstaculo(Vector2 posicionObjetivo, Vector2 direccion)
     {
-        // Obtener el tamaño del personaje para hacer el BoxCast
-        Vector2 size = boxCollider.size * 0.9f; // Reducido para evitar falsos positivos
+        Vector2 size = boxCollider.size * 0.9f;
+
+        // BoxCast ajustado a la Layer "BloquesDestruibles" y al LayerMask desde el Inspector
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, size, 0f, direccion, gridSize, capaObstaculos);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Colisión detectada con: " + hit.collider.name); // Para verificar colisión en consola
+        }
 
         return hit.collider != null;
     }
 
     private Vector2 AlinearAPosicion(Vector2 posicion)
     {
-        float x = Mathf.Floor(posicion.x / gridSize) * gridSize + gridSize / 2; // 🔹 Centrar en casilla
+        float x = Mathf.Floor(posicion.x / gridSize) * gridSize + gridSize / 2;
         float y = Mathf.Floor(posicion.y / gridSize) * gridSize + gridSize / 2;
         return new Vector2(x, y);
     }
