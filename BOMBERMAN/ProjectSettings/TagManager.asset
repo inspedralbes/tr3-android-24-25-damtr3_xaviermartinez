@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - Obstaculo
+  - Destruible
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PERSONAJE
   - Water
   - UI
   - Paredes
-  - 
+  - Destruible
   - 
   - 
   - 
