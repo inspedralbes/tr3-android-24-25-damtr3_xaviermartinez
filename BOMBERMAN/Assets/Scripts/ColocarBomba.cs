@@ -20,32 +20,13 @@ public class ColocarBomba : MonoBehaviour
 
     void Colocar()
     {
-        Vector3 posicionJugador = transform.position;
-        Vector2 posicionAlineada = AlinearAPosicion(posicionJugador);
+        Vector2 posicionAlineada = AlinearAPosicion(transform.position);
 
-        // Obtener la dirección hacia donde está mirando el jugador
-        Vector2 direccionMirada = ObtenerDireccionMirada();
-        Vector2 posicionBomba = posicionAlineada + direccionMirada * tamañoCelda;
-
-        // Verificar si hay un obstáculo en la celda de destino
-        if (!Physics2D.OverlapCircle(posicionBomba, 0.2f, capaBomba | capaObstaculos))
+        // Verificar si ya hay una bomba en la posición alineada
+        if (!Physics2D.OverlapCircle(posicionAlineada, 0.2f, capaBomba))
         {
-            InstanciarBomba(posicionBomba);  // Colocar bomba en la celda frente al jugador
+            InstanciarBomba(posicionAlineada);
         }
-        else
-        {
-            InstanciarBomba(posicionAlineada);  // Colocar bomba debajo del jugador si hay obstáculo
-        }
-    }
-
-    private Vector2 ObtenerDireccionMirada()
-    {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-
-        if (x != 0) return new Vector2(x, 0);  // Prioriza horizontal
-        if (y != 0) return new Vector2(0, y);  // Si no hay horizontal, toma vertical
-        return Vector2.zero;  // Si no hay input, retorna 0
     }
 
     private void InstanciarBomba(Vector2 posicion)
