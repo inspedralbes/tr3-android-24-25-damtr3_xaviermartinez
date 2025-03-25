@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1827420009701346975}
   - component: {fileID: 402393347216092088}
   - component: {fileID: -4598492831798362815}
+  - component: {fileID: 9219556653246864449}
   m_Layer: 6
   m_Name: Bomba
   m_TagString: Untagged
@@ -189,9 +190,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombaPrefab: {fileID: 0}
-  explosionPrefab: {fileID: 0}
   tiempoDeVida: 3
   "tama\xF1oCelda": 1
   capaBomba:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &9219556653246864449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454238175121351527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63e301a84c52e042b3533bdc8896021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 0}
+  "tama\xF1oCelda": 1
+  radioExplosion: 3

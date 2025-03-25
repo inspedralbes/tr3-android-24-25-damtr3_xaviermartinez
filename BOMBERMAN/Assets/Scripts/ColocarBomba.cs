@@ -3,12 +3,12 @@ using System.Collections;
 
 public class ColocarBomba : MonoBehaviour
 {
-    public GameObject bombaPrefab;       // Prefab de la bomba
-    public GameObject explosionPrefab;   // Prefab de la explosión
-    public float tiempoDeVida = 3f;      // Tiempo antes de explotar
-    public float tamañoCelda = 1f;       // Tamaño de la cuadrícula
-    private bool bombaActiva = false;    // Control para permitir solo una bomba a la vez
-    public LayerMask capaBomba;          // Capa de la bomba (para manejar colisión)
+    public GameObject bombaPrefab;
+    public float tiempoDeVida = 3f;
+    public float tamañoCelda = 1f;
+    private bool bombaActiva = false;
+    public LayerMask capaBomba;         // Capa para detectar bombas
+    public LayerMask capaObstaculos;    // Capa para detectar paredes u obstáculos
 
     void Update()
     {
@@ -23,18 +23,41 @@ public class ColocarBomba : MonoBehaviour
         Vector3 posicionJugador = transform.position;
         Vector2 posicionAlineada = AlinearAPosicion(posicionJugador);
 
-        // Instancia la bomba en la posición ajustada
-        GameObject bomba = Instantiate(bombaPrefab, posicionAlineada, Quaternion.identity);
-        bombaActiva = true;  // Marca que hay una bomba activa
+        // Obtener la dirección hacia donde está mirando el jugador
+        Vector2 direccionMirada = ObtenerDireccionMirada();
+        Vector2 posicionBomba = posicionAlineada + direccionMirada * tamañoCelda;
 
-        // Desactiva la colisión temporalmente entre el jugador y la bomba
+        // Verificar si hay un obstáculo en la celda de destino
+        if (!Physics2D.OverlapCircle(posicionBomba, 0.2f, capaBomba | capaObstaculos))
+        {
+            InstanciarBomba(posicionBomba);  // Colocar bomba en la celda frente al jugador
+        }
+        else
+        {
+            InstanciarBomba(posicionAlineada);  // Colocar bomba debajo del jugador si hay obstáculo
+        }
+    }
+
+    private Vector2 ObtenerDireccionMirada()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+
+        if (x != 0) return new Vector2(x, 0);  // Prioriza horizontal
+        if (y != 0) return new Vector2(0, y);  // Si no hay horizontal, toma vertical
+        return Vector2.zero;  // Si no hay input, retorna 0
+    }
+
+    private void InstanciarBomba(Vector2 posicion)
+    {
+        GameObject bomba = Instantiate(bombaPrefab, posicion, Quaternion.identity);
+        bombaActiva = true;
+
+        // Ignorar colisión temporalmente
         Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
-
-        // Vuelve a habilitar la colisión después de un pequeño tiempo (cuando el jugador se aleja)
         StartCoroutine(ActivarColisionDespues(bomba));
 
-        // Inicia la explosión después de tiempoDeVida
-        StartCoroutine(Explosión(bomba, posicionAlineada));
+        StartCoroutine(Explosión(bomba, posicion));  // Iniciar cuenta atrás de explosión
     }
 
     private Vector2 AlinearAPosicion(Vector2 posicion)
@@ -46,43 +69,23 @@ public class ColocarBomba : MonoBehaviour
 
     IEnumerator ActivarColisionDespues(GameObject bomba)
     {
-        yield return new WaitForSeconds(0.5f);  // Espera para que el jugador se aleje
-        Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+        yield return new WaitForSeconds(0.5f);
+        if (bomba != null && bomba.GetComponent<Collider2D>() != null)
+        {
+            Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+        }
     }
 
     IEnumerator Explosión(GameObject bomba, Vector2 posicion)
     {
         yield return new WaitForSeconds(tiempoDeVida);
-
-        // Destruye la bomba y habilita colocar una nueva
         Destroy(bomba);
         bombaActiva = false;
 
-        // Instancia la explosión en el centro
-        Instantiate(explosionPrefab, posicion, Quaternion.identity);
-
-        // Explosión en las 4 direcciones (arriba, abajo, izquierda, derecha)
-        Vector2[] direcciones = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
-
-        foreach (Vector2 direccion in direcciones)
+        Explosion explosionScript = bomba.GetComponent<Explosion>();
+        if (explosionScript != null)
         {
-            for (int i = 1; i <= 3; i++) // Radio de 3 bloques
-            {
-                Vector2 nuevaPos = posicion + direccion * i * tamañoCelda;
-
-                // Instancia el efecto de explosión
-                GameObject explosion = Instantiate(explosionPrefab, nuevaPos, Quaternion.identity);
-
-                // Verifica si hay un objeto destruible
-                Collider2D colision = Physics2D.OverlapCircle(nuevaPos, 0.2f);
-                if (colision != null && colision.CompareTag("Destruible"))
-                {
-                    Destroy(colision.gameObject); // Destruye el objeto
-                    break; // Detiene la explosión en esa dirección
-                }
-
-                yield return new WaitForSeconds(0.1f); // Pequeño delay entre cada explosión
-            }
+            explosionScript.IniciarExplosión(posicion);
         }
     }
 }

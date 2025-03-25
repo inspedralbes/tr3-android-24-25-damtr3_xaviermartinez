@@ -5,8 +5,8 @@ public class PlayerMovement : MonoBehaviour
     public float velocidad = 5f;
     public float gridSize = 1f;
 
-    // Ajuste: Cambiar por el Layer específico "BloquesDestruibles"
-    public LayerMask capaObstaculos; // Seleccionar desde Inspector el Layer 7 (BloquesDestruibles)
+    public LayerMask capaObstaculos;  // Obstáculos como paredes o bloques
+    public LayerMask capaBomba;       // Capa para bombas ya colocadas
 
     private Vector2 destino;
     private bool enMovimiento = false;
@@ -20,9 +20,8 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
 
-        // Alinear personaje al centro de la cuadrícula al inicio
         destino = AlinearAPosicion(transform.position);
-        transform.position = destino;
+        transform.position = destino;  // Alinear al inicio
     }
 
     void Update()
@@ -32,13 +31,11 @@ public class PlayerMovement : MonoBehaviour
             float movX = Input.GetAxisRaw("Horizontal");
             float movY = Input.GetAxisRaw("Vertical");
 
-            // Permitir moverse solo en una dirección a la vez
-            if (movX != 0) movY = 0;
-
+            if (movX != 0) movY = 0;  // Una dirección a la vez
             Vector2 direccion = new Vector2(movX, movY);
             Vector2 nuevaPosicion = AlinearAPosicion((Vector2)transform.position + direccion * gridSize);
 
-            if (direccion != Vector2.zero && !HayObstaculo(nuevaPosicion, direccion))
+            if (direccion != Vector2.zero && !HayObstaculo(nuevaPosicion))
             {
                 destino = nuevaPosicion;
                 enMovimiento = true;
@@ -66,19 +63,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool HayObstaculo(Vector2 posicionObjetivo, Vector2 direccion)
+    private bool HayObstaculo(Vector2 posicionObjetivo)
     {
         Vector2 size = boxCollider.size * 0.9f;
 
-        // BoxCast ajustado a la Layer "BloquesDestruibles" y al LayerMask desde el Inspector
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, size, 0f, direccion, gridSize, capaObstaculos);
-
-        if (hit.collider != null)
-        {
-            Debug.Log("Colisión detectada con: " + hit.collider.name); // Para verificar colisión en consola
-        }
-
-        return hit.collider != null;
+        // Verificar si hay un obstáculo (pared/bloque) o bomba
+        return Physics2D.OverlapBox(posicionObjetivo, size, 0f, capaObstaculos | capaBomba);
     }
 
     private Vector2 AlinearAPosicion(Vector2 posicion)
