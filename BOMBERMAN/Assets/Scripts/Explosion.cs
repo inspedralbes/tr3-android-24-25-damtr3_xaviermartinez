@@ -27,15 +27,28 @@ public class Explosion : MonoBehaviour
         {
             Vector2 nuevaPos = posicion + direccion * i * tamañoCelda;
 
-            // Instancia la explosión en la nueva posición
-            GameObject explosion = Instantiate(explosionPrefab, nuevaPos, Quaternion.identity);
+            // Instancia la explosión visual en la nueva posición
+            Instantiate(explosionPrefab, nuevaPos, Quaternion.identity);
 
             // Verifica si hay un objeto destruible en la nueva posición
-            Collider2D colision = Physics2D.OverlapCircle(nuevaPos, 0.2f);
+            Collider2D colision = Physics2D.OverlapCircle(nuevaPos, 0.2f);  // Asegúrate de que el tamaño de OverlapCircle sea adecuado
             if (colision != null && colision.CompareTag("Destruible"))
             {
                 Destroy(colision.gameObject); // Destruye el objeto destruible
-                break; // Detiene la propagación en esa dirección
+            }
+
+            // Verifica si el jugador está en el rango de la explosión
+            if (colision != null && colision.CompareTag("Jugador"))
+            {
+                // Aquí puedes aplicar la lógica para "matar" al jugador.
+                // Por ejemplo, destruir al jugador o reducir su salud
+                Destroy(colision.gameObject); // O cualquier otro método para eliminar al jugador
+            }
+
+            // Si encuentra un objeto destruible o al jugador, detiene la propagación en esa dirección
+            if (colision != null && (colision.CompareTag("Destruible") || colision.CompareTag("Jugador")))
+            {
+                break;
             }
 
             yield return new WaitForSeconds(0.1f); // Pequeño delay entre cada instancia de explosión
