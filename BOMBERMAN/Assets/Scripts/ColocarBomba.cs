@@ -10,8 +10,16 @@ public class ColocarBomba : MonoBehaviour
     private bool bombaActiva = false;    // Control para permitir solo una bomba a la vez
     public LayerMask capaBomba;          // Capa de la bomba (para manejar colisión)
 
+    private Vector2 direccionActual = Vector2.down;  // Dirección por defecto al inicio
+
     void Update()
     {
+        // Detectar la dirección en la que está mirando el personaje basándose en las teclas de dirección
+        if (Input.GetKey(KeyCode.W)) direccionActual = Vector2.up;
+        if (Input.GetKey(KeyCode.S)) direccionActual = Vector2.down;
+        if (Input.GetKey(KeyCode.A)) direccionActual = Vector2.left;
+        if (Input.GetKey(KeyCode.D)) direccionActual = Vector2.right;
+
         if (Input.GetKeyDown(KeyCode.Space) && !bombaActiva)
         {
             Colocar();
@@ -23,18 +31,21 @@ public class ColocarBomba : MonoBehaviour
         Vector3 posicionJugador = transform.position;
         Vector2 posicionAlineada = AlinearAPosicion(posicionJugador);
 
-        // Instancia la bomba en la posición ajustada
-        GameObject bomba = Instantiate(bombaPrefab, posicionAlineada, Quaternion.identity);
+        // Calcular la nueva posición delante del personaje
+        Vector2 posicionBomba = posicionAlineada + direccionActual * tamañoCelda;
+
+        // Instancia la bomba en la nueva posición
+        GameObject bomba = Instantiate(bombaPrefab, posicionBomba, Quaternion.identity);
         bombaActiva = true;  // Marca que hay una bomba activa
 
         // Desactiva la colisión temporalmente entre el jugador y la bomba
         Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
 
-        // Vuelve a habilitar la colisión después de un pequeño tiempo (cuando el jugador se aleja)
+        // Vuelve a habilitar la colisión después de un pequeño tiempo
         StartCoroutine(ActivarColisionDespues(bomba));
 
         // Inicia la explosión después de tiempoDeVida
-        StartCoroutine(Explosión(bomba, posicionAlineada));
+        StartCoroutine(Explosión(bomba, posicionBomba));
     }
 
     private Vector2 AlinearAPosicion(Vector2 posicion)

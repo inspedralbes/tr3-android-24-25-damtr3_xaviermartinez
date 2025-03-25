@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1827420009701346975}
   - component: {fileID: 402393347216092088}
   - component: {fileID: -4598492831798362815}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bomba
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,3 +192,6 @@ MonoBehaviour:
   explosionPrefab: {fileID: 0}
   tiempoDeVida: 3
   "tama\xF1oCelda": 1
+  capaBomba:
+    serializedVersion: 2
+    m_Bits: 0
