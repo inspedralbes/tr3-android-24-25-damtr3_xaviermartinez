@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerMovement : MonoBehaviour
 {
-    public float velocidad = 5f;
+    public float velocidad = 5f;            // Velocidad actual del jugador
+    public float velocidadBase = 5f;        // Velocidad base sin boost
+    public int boostsRecogidos = 0;         // Contador de boosts recogidos
     public float gridSize = 1f;
     public LayerMask capaObstaculos;  // Obstáculos como paredes o bloques
     public LayerMask capaBomba;       // Capa para bombas ya colocadas
@@ -124,29 +127,36 @@ public class PlayerMovement : MonoBehaviour
         maxBombas -= cantidad;
     }
 
-    public void AumentarVelocidad(float cantidad)
+    // Aumentamos la velocidad con cada boost recogido
+    public void AumentarVelocidad()
     {
-        velocidad += cantidad;
-        StartCoroutine(DesactivarVelocidad(5f));
+        boostsRecogidos++;  // Aumentamos el contador de boosts
+        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos); // Multiplicamos por 2 por cada boost recogido
+        StartCoroutine(DesactivarVelocidad(5f)); // El boost dura 5 segundos
     }
 
-    private IEnumerator DesactivarVelocidad(float tiempo)
+    IEnumerator DesactivarVelocidad(float tiempo)
     {
         yield return new WaitForSeconds(tiempo);
-        velocidad -= 2f;
+        if (boostsRecogidos > 0)
+        {
+            boostsRecogidos--;  // Reducimos el contador de boosts recogidos
+            velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);  // Ajustamos la velocidad al número de boosts restantes
+        }
+    }
+
+    // Método para restaurar la velocidad original cuando el boost se apaga
+    public void RestaurarVelocidad()
+    {
+        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);  // Restaurar la velocidad base multiplicada por los boosts recogidos
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("SpeedBoost"))
         {
-            AumentarVelocidad(2f);
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("BombaBoost"))
-        {
-            AumentarMaxBombas(1);
-            Destroy(collision.gameObject);
+            AumentarVelocidad();
+            Destroy(collision.gameObject);  // Destruimos el boost después de recogerlo
         }
     }
 }
