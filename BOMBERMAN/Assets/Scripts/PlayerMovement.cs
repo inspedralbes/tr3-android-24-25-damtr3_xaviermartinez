@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables para las bombas
     public GameObject bombaPrefab;      // Prefab de la bomba
     public int maxBombas = 1;           // Número máximo de bombas que el jugador puede colocar
-    private int bombasColocadas = 0;    // Contador de las bombas colocadas
+    public int bombasColocadas = 0;     // Contador de las bombas colocadas
 
     private Vector2 destino;
     private bool enMovimiento = false;
@@ -90,13 +90,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void ColocarBomba(Vector2 posicion)
     {
-        Instantiate(bombaPrefab, posicion, Quaternion.identity);
-        bombasColocadas++;
+        if (bombasColocadas < maxBombas)  // Verifica si el jugador tiene bombas disponibles
+        {
+            Instantiate(bombaPrefab, posicion, Quaternion.identity);
+            bombasColocadas++;  // Aumenta el contador de bombas
+        }
     }
 
     public void EliminarBomba()
     {
-        if (bombasColocadas > 0) bombasColocadas--;
+        if (bombasColocadas > 0) bombasColocadas--;  // Disminuye el contador de bombas
     }
 
     public void RecibirDaño(int cantidad)

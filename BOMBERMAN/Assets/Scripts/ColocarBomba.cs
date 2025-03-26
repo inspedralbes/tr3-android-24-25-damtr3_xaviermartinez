@@ -12,7 +12,7 @@ public class ColocarBomba : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !bombaActiva)
+        if (Input.GetKeyDown(KeyCode.Space) && !bombaActiva && GetComponent<PlayerMovement>().bombasColocadas < GetComponent<PlayerMovement>().maxBombas)
         {
             Colocar();
         }

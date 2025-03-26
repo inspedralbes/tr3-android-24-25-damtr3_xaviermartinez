@@ -12,7 +12,7 @@ public class BombaBoost : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ActivarExtraBombs(other.gameObject);
-            Destroy(gameObject);  // Destruir la casilla de bomba boost
+            Destroy(gameObject);
         }
     }
 
