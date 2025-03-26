@@ -38,7 +38,7 @@ public class Explosion : MonoBehaviour
             }
 
             // Verifica si el jugador está en el rango de la explosión
-            if (colision != null && colision.CompareTag("Jugador"))
+            if (colision != null && colision.CompareTag("Player"))
             {
                 // Aquí puedes aplicar la lógica para "matar" al jugador.
                 // Por ejemplo, destruir al jugador o reducir su salud
@@ -46,7 +46,7 @@ public class Explosion : MonoBehaviour
             }
 
             // Si encuentra un objeto destruible o al jugador, detiene la propagación en esa dirección
-            if (colision != null && (colision.CompareTag("Destruible") || colision.CompareTag("Jugador")))
+            if (colision != null && (colision.CompareTag("Destruible") || colision.CompareTag("Player")))
             {
                 break;
             }

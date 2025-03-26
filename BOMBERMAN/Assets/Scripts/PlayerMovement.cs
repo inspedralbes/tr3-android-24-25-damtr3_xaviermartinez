@@ -78,8 +78,6 @@ public class PlayerMovement : MonoBehaviour
     private bool HayObstaculo(Vector2 posicionObjetivo)
     {
         Vector2 size = boxCollider.size * 0.9f;
-
-        // Verificar si hay un obstáculo (pared/bloque) o bomba
         return Physics2D.OverlapBox(posicionObjetivo, size, 0f, capaObstaculos | capaBomba);
     }
 
@@ -90,92 +88,62 @@ public class PlayerMovement : MonoBehaviour
         return new Vector2(x, y);
     }
 
-    // Método para colocar una bomba
     private void ColocarBomba(Vector2 posicion)
     {
-        if (bombasColocadas < maxBombas)
-        {
-            Instantiate(bombaPrefab, posicion, Quaternion.identity);  // Instanciamos la bomba
-            bombasColocadas++;  // Incrementamos el contador de bombas colocadas
-        }
+        Instantiate(bombaPrefab, posicion, Quaternion.identity);
+        bombasColocadas++;
     }
 
-    // Método para eliminar una bomba (cuando explota)
     public void EliminarBomba()
     {
-        if (bombasColocadas > 0)
-        {
-            bombasColocadas--;  // Reducimos el contador de bombas colocadas
-        }
+        if (bombasColocadas > 0) bombasColocadas--;
     }
 
-    // Método para reducir la salud del jugador
     public void RecibirDaño(int cantidad)
     {
         salud -= cantidad;
-        if (salud <= 0)
-        {
-            MatarJugador();
-        }
+        if (salud <= 0) MatarJugador();
     }
 
-    // Método para matar al jugador
     private void MatarJugador()
     {
-        // Aquí puedes agregar una animación de muerte o cualquier otra lógica de muerte
-        Destroy(gameObject);  // Destruye el jugador
+        Destroy(gameObject);
     }
 
-    // Método para aumentar el límite de bombas (cuando el jugador recoge el power-up)
     public void AumentarMaxBombas(int cantidad)
     {
         maxBombas += cantidad;
         Debug.Log("Max bombas aumentado: " + maxBombas);
     }
 
-    // Método para reducir el límite de bombas (cuando el power-up desaparece)
     public void ReducirMaxBombas(int cantidad)
     {
         maxBombas -= cantidad;
     }
 
-    // Método para aumentar la velocidad del jugador
     public void AumentarVelocidad(float cantidad)
     {
         velocidad += cantidad;
-        Debug.Log("Velocidad aumentada: " + velocidad);
-        StartCoroutine(DesactivarVelocidad(5f));  // Desactivamos después de 5 segundos
+        StartCoroutine(DesactivarVelocidad(5f));
     }
 
-    // Corutina para devolver la velocidad original después de un tiempo
     private IEnumerator DesactivarVelocidad(float tiempo)
     {
         yield return new WaitForSeconds(tiempo);
-        velocidad -= 2f;  // Volvemos a la velocidad original
-        Debug.Log("Velocidad restaurada: " + velocidad);
+        velocidad -= 2f;
     }
 
-    // Método para reducir la velocidad del jugador
-    public void ReducirVelocidad(float cantidad)
-    {
-        velocidad -= cantidad;
-    }
-
-    // Método que detecta la colisión con power-ups usando OnCollisionEnter2D
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Comprobamos si es un power-up de velocidad o bombas
         if (collision.gameObject.CompareTag("SpeedBoost"))
         {
-            Debug.Log("Power-up de velocidad detectado");
-            AumentarVelocidad(2f);  // Aumentamos la velocidad
-            Destroy(collision.gameObject);  // Destruimos el power-up
+            AumentarVelocidad(2f);
+            Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("BombaBoost"))
         {
-            Debug.Log("Power-up de bomba detectado");
-            AumentarMaxBombas(1);  // Aumentamos el límite de bombas
-            Destroy(collision.gameObject);  // Destruimos el power-up
+            AumentarMaxBombas(1);
+            Destroy(collision.gameObject);
         }
     }
 }

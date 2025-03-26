@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstaculo
   - Destruible
+  - SpeedBoost
+  - BombaBoost
   layers:
   - Default
   - TransparentFX
