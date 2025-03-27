@@ -4916,7 +4916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1808400756850082051, guid: dba539ab12c858442b5963c8d2aae8bd, type: 3}
       propertyPath: m_TagString
-      value: BombaBoost
+      value: BombBoost
       objectReference: {fileID: 0}
     - target: {fileID: 2624929076640898573, guid: dba539ab12c858442b5963c8d2aae8bd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5034,7 +5034,7 @@ GameObject:
   - component: {fileID: 690522766}
   m_Layer: 6
   m_Name: DestruibleBlock
-  m_TagString: Untagged
+  m_TagString: Destruible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10033,7 +10033,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   salud: 100
-  bombaPrefab: {fileID: 0}
+  bombaPrefab: {fileID: 3454238175121351527, guid: b8efac02dc6925b458be9391cdbbd1ae, type: 3}
   maxBombas: 1
   bombasColocadas: 0
 --- !u!212 &1791387776
@@ -13313,10 +13313,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 591307744}
   - {fileID: 1791387777}
-  - {fileID: 1375756864}
   - {fileID: 579759863}
   - {fileID: 1996667391}
   - {fileID: 1955100260}
   - {fileID: 2002862731}
   - {fileID: 412126151}
   - {fileID: 1005545145}
+  - {fileID: 1375756864}

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class PlayerMovement : MonoBehaviour
 {
     public float velocidad = 5f;            // Velocidad actual del jugador
@@ -93,16 +92,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void ColocarBomba(Vector2 posicion)
     {
-        if (bombasColocadas < maxBombas)  // Verifica si el jugador tiene bombas disponibles
+        if (bombasColocadas < maxBombas)
         {
             Instantiate(bombaPrefab, posicion, Quaternion.identity);
-            bombasColocadas++;  // Aumenta el contador de bombas
+            bombasColocadas++;
         }
     }
 
     public void EliminarBomba()
     {
-        if (bombasColocadas > 0) bombasColocadas--;  // Disminuye el contador de bombas
+        if (bombasColocadas > 0) bombasColocadas--;
     }
 
     public void RecibirDaño(int cantidad)
@@ -127,12 +126,11 @@ public class PlayerMovement : MonoBehaviour
         maxBombas -= cantidad;
     }
 
-    // Aumentamos la velocidad con cada boost recogido
     public void AumentarVelocidad()
     {
-        boostsRecogidos++;  // Aumentamos el contador de boosts
-        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos); // Multiplicamos por 2 por cada boost recogido
-        StartCoroutine(DesactivarVelocidad(5f)); // El boost dura 5 segundos
+        boostsRecogidos++;
+        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);
+        StartCoroutine(DesactivarVelocidad(5f));
     }
 
     IEnumerator DesactivarVelocidad(float tiempo)
@@ -140,23 +138,26 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(tiempo);
         if (boostsRecogidos > 0)
         {
-            boostsRecogidos--;  // Reducimos el contador de boosts recogidos
-            velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);  // Ajustamos la velocidad al número de boosts restantes
+            boostsRecogidos--;
+            velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);
         }
     }
 
-    // Método para restaurar la velocidad original cuando el boost se apaga
     public void RestaurarVelocidad()
     {
-        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);  // Restaurar la velocidad base multiplicada por los boosts recogidos
+        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("SpeedBoost"))
         {
             AumentarVelocidad();
-            Destroy(collision.gameObject);  // Destruimos el boost después de recogerlo
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("BombBoost"))
+        {
+            collision.gameObject.GetComponent<BombaBoost>().ActivarExtraBombs(gameObject);
         }
     }
 }

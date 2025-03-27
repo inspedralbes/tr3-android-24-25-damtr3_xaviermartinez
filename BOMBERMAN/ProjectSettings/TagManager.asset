@@ -8,6 +8,7 @@ TagManager:
   - Destruible
   - SpeedBoost
   - BombaBoost
+  - BombBoost
   layers:
   - Default
   - TransparentFX

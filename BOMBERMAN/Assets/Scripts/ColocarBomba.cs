@@ -6,15 +6,21 @@ public class ColocarBomba : MonoBehaviour
     public GameObject bombaPrefab;
     public float tiempoDeVida = 3f;
     public float tamañoCelda = 1f;
-    private bool bombaActiva = false;
     public LayerMask capaBomba;         // Capa para detectar bombas
     public LayerMask capaObstaculos;    // Capa para detectar paredes u obstáculos
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !bombaActiva && GetComponent<PlayerMovement>().bombasColocadas < GetComponent<PlayerMovement>().maxBombas)
+        PlayerMovement player = GetComponent<PlayerMovement>();
+
+        if (Input.GetKeyDown(KeyCode.Space) && bombaPrefab != null
+            && player.bombasColocadas < player.maxBombas)
         {
             Colocar();
+        }
+        else if (bombaPrefab == null)
+        {
+            Debug.LogError("¡El prefab de la bomba no está asignado en el Inspector!");
         }
     }
 
@@ -31,14 +37,24 @@ public class ColocarBomba : MonoBehaviour
 
     private void InstanciarBomba(Vector2 posicion)
     {
-        GameObject bomba = Instantiate(bombaPrefab, posicion, Quaternion.identity);
-        bombaActiva = true;
+        if (bombaPrefab != null)
+        {
+            GameObject bomba = Instantiate(bombaPrefab, posicion, Quaternion.identity);
 
-        // Ignorar colisión temporalmente
-        Physics2D.IgnoreCollision(bomba.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
-        StartCoroutine(ActivarColisionDespues(bomba));
+            // Actualizar el contador de bombas
+            PlayerMovement player = GetComponent<PlayerMovement>();
+            player.bombasColocadas++;
 
-        StartCoroutine(Explosión(bomba, posicion));  // Iniciar cuenta atrás de explosión
+            // Ignorar colisión temporalmente
+            Collider2D bombaCollider = bomba.GetComponent<Collider2D>();
+            if (bombaCollider != null)
+            {
+                Physics2D.IgnoreCollision(bombaCollider, GetComponent<Collider2D>(), true);
+            }
+            StartCoroutine(ActivarColisionDespues(bomba));
+
+            StartCoroutine(Explosión(bomba, posicion));  // Iniciar cuenta atrás de explosión
+        }
     }
 
     private Vector2 AlinearAPosicion(Vector2 posicion)
@@ -60,13 +76,20 @@ public class ColocarBomba : MonoBehaviour
     IEnumerator Explosión(GameObject bomba, Vector2 posicion)
     {
         yield return new WaitForSeconds(tiempoDeVida);
-        Destroy(bomba);
-        bombaActiva = false;
 
-        Explosion explosionScript = bomba.GetComponent<Explosion>();
-        if (explosionScript != null)
+        if (bomba != null) // Verificar si la bomba sigue existiendo antes de destruirla
         {
-            explosionScript.IniciarExplosión(posicion);
+            Destroy(bomba);
+
+            // Reducir el contador de bombas
+            PlayerMovement player = GetComponent<PlayerMovement>();
+            player.bombasColocadas--;
+
+            Explosion explosionScript = bomba.GetComponent<Explosion>();
+            if (explosionScript != null)
+            {
+                explosionScript.IniciarExplosión(posicion);
+            }
         }
     }
 }

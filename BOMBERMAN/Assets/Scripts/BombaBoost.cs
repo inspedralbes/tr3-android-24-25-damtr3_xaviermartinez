@@ -8,7 +8,6 @@ public class BombaBoost : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Power-up de bombas recogido.");
         if (other.CompareTag("Player"))
         {
             ActivarExtraBombs(other.gameObject);
@@ -16,11 +15,12 @@ public class BombaBoost : MonoBehaviour
         }
     }
 
-    private void ActivarExtraBombs(GameObject jugador)
+    public void ActivarExtraBombs(GameObject jugador)
     {
         PlayerMovement playerMovement = jugador.GetComponent<PlayerMovement>();
         if (playerMovement != null)
         {
+            Debug.Log("Boost de bombas recogido.");
             playerMovement.AumentarMaxBombas(aumentoBombas);
             StartCoroutine(DesactivarExtraBombs(playerMovement));
         }
