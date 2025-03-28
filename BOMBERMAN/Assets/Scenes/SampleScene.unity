@@ -4916,7 +4916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1808400756850082051, guid: dba539ab12c858442b5963c8d2aae8bd, type: 3}
       propertyPath: m_TagString
-      value: BombBoost
+      value: BombaBoost
       objectReference: {fileID: 0}
     - target: {fileID: 2624929076640898573, guid: dba539ab12c858442b5963c8d2aae8bd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5032,7 +5032,8 @@ GameObject:
   - component: {fileID: 690522764}
   - component: {fileID: 690522767}
   - component: {fileID: 690522766}
-  m_Layer: 6
+  - component: {fileID: 690522768}
+  m_Layer: 7
   m_Name: DestruibleBlock
   m_TagString: Destruible
   m_Icon: {fileID: 0}
@@ -7813,6 +7814,18 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!114 &690522768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690522762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931c8015de788f24dbffcceab31c716c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1005545145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9972,7 +9985,6 @@ GameObject:
   - component: {fileID: 1791387778}
   - component: {fileID: 1791387779}
   - component: {fileID: 1791387780}
-  - component: {fileID: 1791387781}
   m_Layer: 0
   m_Name: Personaje
   m_TagString: Player
@@ -10031,7 +10043,10 @@ MonoBehaviour:
     m_Bits: 64
   capaBomba:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  capaDestruible:
+    serializedVersion: 2
+    m_Bits: 128
   salud: 100
   bombaPrefab: {fileID: 3454238175121351527, guid: b8efac02dc6925b458be9391cdbbd1ae, type: 3}
   maxBombas: 1
@@ -10201,27 +10216,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1791387781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791387773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b5fd5262e2dc24a8217984955ab684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bombaPrefab: {fileID: 3454238175121351527, guid: b8efac02dc6925b458be9391cdbbd1ae, type: 3}
-  tiempoDeVida: 3
-  "tama\xF1oCelda": 1
-  capaBomba:
-    serializedVersion: 2
-    m_Bits: 0
-  capaObstaculos:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &1816838687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1808400756850082051, guid: dba539ab12c858442b5963c8d2aae8bd, type: 3}

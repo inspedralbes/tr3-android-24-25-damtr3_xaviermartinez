@@ -9,11 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float gridSize = 1f;
     public LayerMask capaObstaculos;  // Obstáculos como paredes o bloques
     public LayerMask capaBomba;       // Capa para bombas ya colocadas
+    public LayerMask capaDestruible;
     public int salud = 100;           // Salud del jugador
 
     // Variables para las bombas
     public GameObject bombaPrefab;      // Prefab de la bomba
-    public int maxBombas = 1;           // Número máximo de bombas que el jugador puede colocar
+    public int maxBombas = 100;           // Número máximo de bombas que el jugador puede colocar
     public int bombasColocadas = 0;     // Contador de las bombas colocadas
 
     private Vector2 destino;
@@ -80,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     private bool HayObstaculo(Vector2 posicionObjetivo)
     {
         Vector2 size = boxCollider.size * 0.9f;
-        return Physics2D.OverlapBox(posicionObjetivo, size, 0f, capaObstaculos | capaBomba);
+        return Physics2D.OverlapBox(posicionObjetivo, size, 0f, capaObstaculos | capaBomba | capaDestruible);
     }
 
     private Vector2 AlinearAPosicion(Vector2 posicion)
@@ -94,14 +95,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (bombasColocadas < maxBombas)
         {
-            Instantiate(bombaPrefab, posicion, Quaternion.identity);
+            GameObject bomba = Instantiate(bombaPrefab, posicion, Quaternion.identity);
             bombasColocadas++;
+
+            // Configurar la bomba para que llame a EliminarBomba al explotar
+            BombaLogic bombaLogic = bomba.GetComponent<BombaLogic>();
+            if (bombaLogic != null)
+            {
+                bombaLogic.SetPlayer(this);
+            }
         }
     }
 
     public void EliminarBomba()
     {
-        if (bombasColocadas > 0) bombasColocadas--;
+        bombasColocadas = Mathf.Max(0, bombasColocadas - 1);
     }
 
     public void RecibirDaño(int cantidad)
@@ -155,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
             AumentarVelocidad();
             Destroy(collision.gameObject);
         }
-        else if (collision.gameObject.CompareTag("BombBoost"))
+        else if (collision.gameObject.CompareTag("BombaBoost"))
         {
             collision.gameObject.GetComponent<BombaBoost>().ActivarExtraBombs(gameObject);
         }
