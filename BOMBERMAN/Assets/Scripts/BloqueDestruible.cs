@@ -1,15 +1,22 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BloqueDestruible : MonoBehaviour
 {
-    // Este método se llamará cuando otro objeto entre en su colisión
-    private void OnTriggerEnter2D(Collider2D colision)
+    private Tilemap tilemap;
+
+    void Start()
     {
-        // Comprueba si el objeto que colisiona tiene el tag "Explosion"
+        tilemap = GetComponentInParent<Tilemap>();
+    }
+
+    void OnTriggerEnter2D(Collider2D colision)
+    {
         if (colision.CompareTag("Explosion"))
         {
-            // Destruye el bloque
-            Destroy(gameObject);
+            Vector3Int posicionTile = tilemap.WorldToCell(transform.position);
+            tilemap.SetTile(posicionTile, null); // Destruye solo este tile
+            Destroy(gameObject); // Opcional: Elimina el GameObject si es necesario
         }
     }
 }

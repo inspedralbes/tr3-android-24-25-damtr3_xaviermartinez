@@ -5,11 +5,16 @@ public class BombaLogic : MonoBehaviour
 {
     public float tiempoExplosion = 3f;
     public int radioExplosion = 3;
-    public GameObject explosionPrefab;
     public LayerMask capaObstaculos;
     public LayerMask capaDestruible;
 
     private PlayerMovement jugador;
+    private Explosion _explosion;
+
+    void Awake()
+    {
+        _explosion = GetComponent<Explosion>();
+    }
 
     public void SetPlayer(PlayerMovement player)
     {
@@ -20,16 +25,12 @@ public class BombaLogic : MonoBehaviour
     IEnumerator Explotar()
     {
         yield return new WaitForSeconds(tiempoExplosion);
-
-        // Iniciar explosión
-        Explosion explosionScript = GetComponent<Explosion>();
-        if (explosionScript != null)
-        {
-            explosionScript.IniciarExplosion(transform.position, radioExplosion, capaObstaculos, capaDestruible);
-        }
-
-        // Notificar al jugador y destruir bomba
+        _explosion.IniciarExplosion(transform.position, radioExplosion, capaObstaculos, capaDestruible);
         jugador.EliminarBomba();
+        Destroy(gameObject);
+    }
+    public void IniciarExplosion(Vector2 posicion, int radio, LayerMask capaObstaculos, LayerMask capaDestruible)
+{        jugador.EliminarBomba();
         Destroy(gameObject);
     }
 }

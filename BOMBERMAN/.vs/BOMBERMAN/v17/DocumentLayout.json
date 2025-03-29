@@ -1,18 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\",
+  "WorkspaceRootPath": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|c:\\users\\xavie\\desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\bomberman\\assets\\scripts\\colocarbomba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\colocarbomba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|c:\\users\\xavie\\desktop\\bomberman al\\tr3-android-24-25-damtr3_xaviermartinez\\bomberman\\assets\\scripts\\explosion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\explosion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|c:\\users\\xavie\\desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\bomberman\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\assets\\scripts\\bloquedestruible.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bloquedestruible.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\assets\\scripts\\bombalogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bombalogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|c:\\users\\xavie\\desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\bomberman\\assets\\scripts\\bombaboost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bombaboost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +26,55 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ColocarBomba.cs",
-              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\Assets\\Scripts\\ColocarBomba.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\ColocarBomba.cs",
-              "ToolTip": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\Assets\\Scripts\\ColocarBomba.cs",
-              "RelativeToolTip": "Assets\\Scripts\\ColocarBomba.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAiwF8AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "BombaLogic.cs",
+              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\BombaLogic.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BombaLogic.cs",
+              "ToolTip": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\BombaLogic.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BombaLogic.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAkwB4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T20:59:54.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T08:48:34.12Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PlayerMovement.cs",
-              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\Assets\\Scripts\\PlayerMovement.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerMovement.cs",
-              "ToolTip": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\Assets\\Scripts\\PlayerMovement.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerMovement.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAiwDwAAAAtAAAAAAAAAA==",
+              "Title": "BloqueDestruible.cs",
+              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\BloqueDestruible.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BloqueDestruible.cs",
+              "ToolTip": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\BloqueDestruible.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BloqueDestruible.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T20:50:06.737Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T08:48:28.651Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BombaBoost.cs",
-              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\Assets\\Scripts\\BombaBoost.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\BombaBoost.cs",
-              "ToolTip": "C:\\Users\\xavie\\Desktop\\tr3-android-24-25-damtr3_xaviermartinez-main\\BOMBERMAN\\Assets\\Scripts\\BombaBoost.cs",
-              "RelativeToolTip": "Assets\\Scripts\\BombaBoost.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCIAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "PlayerMovement.cs",
+              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\PlayerMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerMovement.cs",
+              "ToolTip": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\PlayerMovement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerMovement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T20:48:26.871Z",
+              "WhenOpened": "2025-03-29T08:48:35.921Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Explosion.cs",
+              "DocumentMoniker": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\Explosion.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Explosion.cs",
+              "ToolTip": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\Explosion.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Explosion.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAkwDwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T08:48:34.727Z",
               "EditorCaption": ""
             }
           ]

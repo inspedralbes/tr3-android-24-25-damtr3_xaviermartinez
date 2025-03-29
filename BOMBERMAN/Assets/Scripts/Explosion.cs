@@ -1,10 +1,24 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Tilemaps;
 
 public class Explosion : MonoBehaviour
 {
     public GameObject explosionPrefab;
     public float tamañoCelda = 1f;
+
+    [Header("Configuración de Tilemap")]
+    public Tilemap destructibleTilemap; // Asignar en el Inspector
+    public TileBase tileADestruir;      // Asignar el Tile específico
+
+    void Start()
+    {
+        // Backup: Busca automáticamente si no está asignado
+        if (destructibleTilemap == null)
+        {
+            destructibleTilemap = GameObject.Find("DestruibleBlock").GetComponent<Tilemap>();
+        }
+    }
 
     public void IniciarExplosion(Vector2 posicion, int radio, LayerMask capaObstaculos, LayerMask capaDestruible)
     {
@@ -13,34 +27,35 @@ public class Explosion : MonoBehaviour
 
         foreach (Vector2 dir in direcciones)
         {
-            StartCoroutine(PropagarExplosion(posicion, dir, radio, capaObstaculos, capaDestruible));
+            StartCoroutine(PropagarExplosion(posicion, dir, radio, capaObstaculos));
         }
     }
 
-    IEnumerator PropagarExplosion(Vector2 posicion, Vector2 direccion, int radio, LayerMask obstaculos, LayerMask destruible)
+    IEnumerator PropagarExplosion(Vector2 posicion, Vector2 direccion, int radio, LayerMask obstaculos)
     {
         for (int i = 1; i <= radio; i++)
         {
             Vector2 nuevaPos = posicion + direccion * i * tamañoCelda;
 
-            // Verificar obstáculos indestructibles
+            // 1. Verificar obstáculos indestructibles
             if (Physics2D.OverlapCircle(nuevaPos, 0.1f, obstaculos))
             {
                 break;
             }
 
-            // Crear explosión
-            Instantiate(explosionPrefab, nuevaPos, Quaternion.identity);
+            // 2. Verificar tiles destructibles
+            Vector3Int tilePos = destructibleTilemap.WorldToCell(nuevaPos);
+            TileBase tile = destructibleTilemap.GetTile(tilePos);
 
-            // Verificar objetos destruibles
-            Collider2D col = Physics2D.OverlapCircle(nuevaPos, 0.1f, destruible);
-            if (col != null)
+            if (tile == tileADestruir) // Si falla, usar if (tile != null)
             {
-                Destroy(col.gameObject);
-                break; // Detener propagación si hay destruible
+                destructibleTilemap.SetTile(tilePos, null);
+                Instantiate(explosionPrefab, destructibleTilemap.GetCellCenterWorld(tilePos), Quaternion.identity);
+                break;
             }
 
-            yield return new WaitForSeconds(0.05f);
+            Instantiate(explosionPrefab, nuevaPos, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

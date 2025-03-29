@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9212843494807876703}
   - component: {fileID: 1827420009701346975}
   - component: {fileID: 402393347216092088}
-  - component: {fileID: 9219556653246864449}
   - component: {fileID: -1045680742664993027}
+  - component: {fileID: -299914422856050856}
   m_Layer: 8
   m_Name: Bomba
   m_TagString: Explosion
@@ -149,20 +149,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9219556653246864449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3454238175121351527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f63e301a84c52e042b3533bdc8896021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 3101660880517261494, guid: cdcf207ee2e009b4288a5d1f4955cc89, type: 3}
-  "tama\xF1oCelda": 1
 --- !u!114 &-1045680742664993027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,10 +163,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoExplosion: 3
   radioExplosion: 3
-  explosionPrefab: {fileID: 3101660880517261494, guid: cdcf207ee2e009b4288a5d1f4955cc89, type: 3}
   capaObstaculos:
     serializedVersion: 2
     m_Bits: 64
   capaDestruible:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &-299914422856050856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454238175121351527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63e301a84c52e042b3533bdc8896021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 3101660880517261494, guid: cdcf207ee2e009b4288a5d1f4955cc89, type: 3}
+  "tama\xF1oCelda": 1
+  destructibleTilemap: {fileID: 0}
+  tileADestruir: {fileID: 11400000, guid: bfb13b819d37c0d49a5ca1834334cdd0, type: 2}
