@@ -8,12 +8,11 @@ public class Explosion : MonoBehaviour
     public float tamañoCelda = 1f;
 
     [Header("Configuración de Tilemap")]
-    public Tilemap destructibleTilemap; // Asignar en el Inspector
-    public TileBase tileADestruir;      // Asignar el Tile específico
+    public Tilemap destructibleTilemap;
+    public TileBase tileADestruir;
 
     void Start()
     {
-        // Backup: Busca automáticamente si no está asignado
         if (destructibleTilemap == null)
         {
             destructibleTilemap = GameObject.Find("DestruibleBlock").GetComponent<Tilemap>();
@@ -22,7 +21,10 @@ public class Explosion : MonoBehaviour
 
     public void IniciarExplosion(Vector2 posicion, int radio, LayerMask capaObstaculos, LayerMask capaDestruible)
     {
-        Instantiate(explosionPrefab, posicion, Quaternion.identity);
+        // Explosión central
+        GameObject explosionCentral = Instantiate(explosionPrefab, posicion, Quaternion.identity);
+        Destroy(explosionCentral, 5f);
+
         Vector2[] direcciones = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
 
         foreach (Vector2 dir in direcciones)
@@ -40,38 +42,36 @@ public class Explosion : MonoBehaviour
             // 1. Verificar obstáculos indestructibles
             if (Physics2D.OverlapCircle(nuevaPos, 0.1f, obstaculos))
             {
-                break;
+                break; // Detener si hay un bloque indestructible
             }
 
-            // 2. Verificar tiles destructibles
+            // 2. Verificar y destruir tile destruible
             Vector3Int tilePos = destructibleTilemap.WorldToCell(nuevaPos);
             TileBase tile = destructibleTilemap.GetTile(tilePos);
 
-            if (tile == tileADestruir) // Si falla, usar if (tile != null)
+            if (tile == tileADestruir)
             {
-                destructibleTilemap.SetTile(tilePos, null);
-                Instantiate(explosionPrefab, destructibleTilemap.GetCellCenterWorld(tilePos), Quaternion.identity);
-                break;
+                destructibleTilemap.SetTile(tilePos, null); // Destruir el bloque
             }
 
-            // 🔄 Crear explosión con rotación según dirección
+            // 3. Crear explosión visual en esta posición
             Quaternion rotacion = ObtenerRotacionSegunDireccion(direccion);
-            Instantiate(explosionPrefab, nuevaPos, rotacion);
+            GameObject explosion = Instantiate(explosionPrefab, nuevaPos, rotacion);
+            Destroy(explosion, 5f); // Destruir después de 5 segundos
 
             yield return new WaitForSeconds(0.1f);
         }
     }
 
-    // 🔄 Método para obtener la rotación según la dirección de la explosión
     Quaternion ObtenerRotacionSegunDireccion(Vector2 direccion)
     {
         if (direccion == Vector2.up)
-            return Quaternion.Euler(0, 0, 0); // Arriba (sin rotar)
+            return Quaternion.Euler(0, 0, 0);
         else if (direccion == Vector2.down)
-            return Quaternion.Euler(0, 0, 180); // Abajo (180 grados)
+            return Quaternion.Euler(0, 0, 180);
         else if (direccion == Vector2.left)
-            return Quaternion.Euler(0, 0, 90); // Izquierda (90 grados)
+            return Quaternion.Euler(0, 0, 90);
         else
-            return Quaternion.Euler(0, 0, -90); // Derecha (-90 grados)
+            return Quaternion.Euler(0, 0, -90);
     }
 }

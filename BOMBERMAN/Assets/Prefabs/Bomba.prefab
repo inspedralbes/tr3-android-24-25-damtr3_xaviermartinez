@@ -137,7 +137,7 @@ Animator:
   m_GameObject: {fileID: 3454238175121351527}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d66eeeb2e31701d44922c15971eb595f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 23d8cf5417de11a478d5ef546aeb1f2c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiempoExplosion: 3
-  radioExplosion: 1
+  radioExplosion: 3
   capaObstaculos:
     serializedVersion: 2
     m_Bits: 64
