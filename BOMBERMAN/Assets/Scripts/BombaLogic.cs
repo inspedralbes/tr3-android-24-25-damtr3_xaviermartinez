@@ -29,8 +29,4 @@ public class BombaLogic : MonoBehaviour
         jugador.EliminarBomba();
         Destroy(gameObject);
     }
-    public void IniciarExplosion(Vector2 posicion, int radio, LayerMask capaObstaculos, LayerMask capaDestruible)
-{        jugador.EliminarBomba();
-        Destroy(gameObject);
-    }
 }

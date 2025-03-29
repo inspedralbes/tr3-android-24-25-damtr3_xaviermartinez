@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiempoExplosion: 3
-  radioExplosion: 3
+  radioExplosion: 1
   capaObstaculos:
     serializedVersion: 2
     m_Bits: 64

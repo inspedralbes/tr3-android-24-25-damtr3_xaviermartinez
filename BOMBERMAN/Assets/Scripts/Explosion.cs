@@ -1,19 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Tilemaps;
 
 public class Explosion : MonoBehaviour
 {
     public GameObject explosionPrefab;
-    public float tama�oCelda = 1f;
+    public float tamañoCelda = 1f;
 
-    [Header("Configuraci�n de Tilemap")]
+    [Header("Configuración de Tilemap")]
     public Tilemap destructibleTilemap; // Asignar en el Inspector
-    public TileBase tileADestruir;      // Asignar el Tile espec�fico
+    public TileBase tileADestruir;      // Asignar el Tile específico
 
     void Start()
     {
-        // Backup: Busca autom�ticamente si no est� asignado
+        // Backup: Busca automáticamente si no está asignado
         if (destructibleTilemap == null)
         {
             destructibleTilemap = GameObject.Find("DestruibleBlock").GetComponent<Tilemap>();
@@ -35,9 +35,9 @@ public class Explosion : MonoBehaviour
     {
         for (int i = 1; i <= radio; i++)
         {
-            Vector2 nuevaPos = posicion + direccion * i * tama�oCelda;
+            Vector2 nuevaPos = posicion + direccion * i * tamañoCelda;
 
-            // 1. Verificar obst�culos indestructibles
+            // 1. Verificar obstáculos indestructibles
             if (Physics2D.OverlapCircle(nuevaPos, 0.1f, obstaculos))
             {
                 break;
@@ -54,8 +54,24 @@ public class Explosion : MonoBehaviour
                 break;
             }
 
-            Instantiate(explosionPrefab, nuevaPos, Quaternion.identity);
+            // 🔄 Crear explosión con rotación según dirección
+            Quaternion rotacion = ObtenerRotacionSegunDireccion(direccion);
+            Instantiate(explosionPrefab, nuevaPos, rotacion);
+
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    // 🔄 Método para obtener la rotación según la dirección de la explosión
+    Quaternion ObtenerRotacionSegunDireccion(Vector2 direccion)
+    {
+        if (direccion == Vector2.up)
+            return Quaternion.Euler(0, 0, 0); // Arriba (sin rotar)
+        else if (direccion == Vector2.down)
+            return Quaternion.Euler(0, 0, 180); // Abajo (180 grados)
+        else if (direccion == Vector2.left)
+            return Quaternion.Euler(0, 0, 90); // Izquierda (90 grados)
+        else
+            return Quaternion.Euler(0, 0, -90); // Derecha (-90 grados)
     }
 }

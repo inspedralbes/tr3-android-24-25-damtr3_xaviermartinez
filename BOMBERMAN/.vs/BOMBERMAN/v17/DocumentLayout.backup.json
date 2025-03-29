@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\assets\\scripts\\explosion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|c:\\users\\xavie\\desktop\\bomberman al\\tr3-android-24-25-damtr3_xaviermartinez\\bomberman\\assets\\scripts\\explosion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\explosion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|c:\\users\\xavie\\desktop\\bomberman al\\tr3-android-24-25-damtr3_xaviermartinez\\bomberman\\assets\\scripts\\bloquedestruible.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\assets\\scripts\\bloquedestruible.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0CA9F468-080D-0630-C81D-4862CBB62507}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bloquedestruible.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -50,8 +50,7 @@
               "RelativeToolTip": "Assets\\Scripts\\BloqueDestruible.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T08:48:28.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-29T08:48:28.651Z"
             },
             {
               "$type": "Document",
@@ -73,7 +72,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Explosion.cs",
               "ToolTip": "C:\\Users\\xavie\\Desktop\\BOMBERMAN AL\\tr3-android-24-25-damtr3_xaviermartinez\\BOMBERMAN\\Assets\\Scripts\\Explosion.cs",
               "RelativeToolTip": "Assets\\Scripts\\Explosion.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAkwDwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T08:48:34.727Z",
               "EditorCaption": ""
