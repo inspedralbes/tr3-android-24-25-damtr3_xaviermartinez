@@ -6,6 +6,7 @@ public class Explosion : MonoBehaviour
 {
     public GameObject explosionPrefab;
     public float tamañoCelda = 1f;
+    public int damage = 1; // Daño por explosión
 
     [Header("Configuración de Tilemap")]
     public Tilemap destructibleTilemap;
@@ -58,6 +59,20 @@ public class Explosion : MonoBehaviour
             Quaternion rotacion = ObtenerRotacionSegunDireccion(direccion);
             GameObject explosion = Instantiate(explosionPrefab, nuevaPos, rotacion);
             Destroy(explosion, 5f); // Destruir después de 5 segundos
+
+            // 4. Verificar colisión con jugadores
+            Collider2D[] jugadores = Physics2D.OverlapCircleAll(nuevaPos, 0.1f);
+            foreach (Collider2D jugador in jugadores)
+            {
+                if (jugador.CompareTag("Player"))
+                {
+                    PlayerMovement player = jugador.GetComponent<PlayerMovement>();
+                    if (player != null)
+                    {
+                        player.PerderVida(); // Reducir vida del jugador
+                    }
+                }
+            }
 
             yield return new WaitForSeconds(0.1f);
         }
