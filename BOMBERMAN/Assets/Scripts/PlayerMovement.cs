@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,17 +11,17 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask capaBomba;
     public LayerMask capaDestruible;
     public int salud = 100;
+    public int vidas = 3;
+    public TMP_Text textoVidas;
     public GameObject bombaPrefab;
     public int maxBombas = 1;
     public int bombasColocadas = 0;
 
-    // Variables para power-ups
     private float velocidadOriginal;
     private int maxBombasOriginal;
     public Coroutine velocidadCoroutine;
     public Coroutine bombasCoroutine;
 
-    // Variables de control para multiplayer
     public string horizontalAxis = "Horizontal";
     public string verticalAxis = "Vertical";
     public KeyCode bombKey = KeyCode.Space;
@@ -37,9 +39,9 @@ public class PlayerMovement : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         velocidadOriginal = velocidad;
         maxBombasOriginal = maxBombas;
-
         destino = AlinearAPosicion(transform.position);
         transform.position = destino;
+        ActualizarVidasUI();
     }
 
     void Update()
@@ -57,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 destino = nuevaPosicion;
                 enMovimiento = true;
-
                 animator.SetBool("IsMoving", true);
                 animator.SetFloat("MoveX", direccion.x);
                 animator.SetFloat("MoveY", direccion.y);
@@ -104,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject bomba = Instantiate(bombaPrefab, posicion, Quaternion.identity);
             bombasColocadas++;
-
             BombaLogic bombaLogic = bomba.GetComponent<BombaLogic>();
             if (bombaLogic != null)
             {
@@ -118,7 +118,6 @@ public class PlayerMovement : MonoBehaviour
         bombasColocadas = Mathf.Max(0, bombasColocadas - 1);
     }
 
-    // ================== MÉTODOS PARA POWER-UPS ==================
     public void AplicarSpeedBoost(float multiplicador, float duracion)
     {
         if (velocidadCoroutine != null)
@@ -154,11 +153,30 @@ public class PlayerMovement : MonoBehaviour
     public void RecibirDaño(int cantidad)
     {
         salud -= cantidad;
-        if (salud <= 0) MatarJugador();
+        if (salud <= 0)
+        {
+            vidas--;
+            salud = 100;
+            ActualizarVidasUI();
+
+            if (vidas <= 0)
+            {
+                MatarJugador();
+            }
+        }
+    }
+
+    private void ActualizarVidasUI()
+    {
+        if (textoVidas != null)
+        {
+            textoVidas.text = $"VIDAS: {vidas}";
+        }
     }
 
     private void MatarJugador()
     {
-        Destroy(gameObject);
+        Debug.Log("¡Jugador eliminado!");
+        Time.timeScale = 0;
     }
 }
