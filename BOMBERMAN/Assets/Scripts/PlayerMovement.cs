@@ -3,19 +3,26 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float velocidad = 5f;            // Velocidad actual del jugador
-    public float velocidadBase = 5f;        // Velocidad base sin boost
-    public int boostsRecogidos = 0;         // Contador de boosts recogidos
+    public float velocidad = 5f;
     public float gridSize = 1f;
-    public LayerMask capaObstaculos;  // Obstáculos como paredes o bloques
-    public LayerMask capaBomba;       // Capa para bombas ya colocadas
+    public LayerMask capaObstaculos;
+    public LayerMask capaBomba;
     public LayerMask capaDestruible;
-    public int salud = 100;           // Salud del jugador
+    public int salud = 100;
+    public GameObject bombaPrefab;
+    public int maxBombas = 1;
+    public int bombasColocadas = 0;
 
-    // Variables para las bombas
-    public GameObject bombaPrefab;      // Prefab de la bomba
-    public int maxBombas = 100;           // Número máximo de bombas que el jugador puede colocar
-    public int bombasColocadas = 0;     // Contador de las bombas colocadas
+    // Variables para power-ups
+    private float velocidadOriginal;
+    private int maxBombasOriginal;
+    public Coroutine velocidadCoroutine;
+    public Coroutine bombasCoroutine;
+
+    // Variables de control para multiplayer
+    public string horizontalAxis = "Horizontal";
+    public string verticalAxis = "Vertical";
+    public KeyCode bombKey = KeyCode.Space;
 
     private Vector2 destino;
     private bool enMovimiento = false;
@@ -28,19 +35,21 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        velocidadOriginal = velocidad;
+        maxBombasOriginal = maxBombas;
 
         destino = AlinearAPosicion(transform.position);
-        transform.position = destino;  // Alinear al inicio
+        transform.position = destino;
     }
 
     void Update()
     {
         if (!enMovimiento)
         {
-            float movX = Input.GetAxisRaw("Horizontal");
-            float movY = Input.GetAxisRaw("Vertical");
+            float movX = Input.GetAxisRaw(horizontalAxis);
+            float movY = Input.GetAxisRaw(verticalAxis);
 
-            if (movX != 0) movY = 0;  // Una dirección a la vez
+            if (movX != 0) movY = 0;
             Vector2 direccion = new Vector2(movX, movY);
             Vector2 nuevaPosicion = AlinearAPosicion((Vector2)transform.position + direccion * gridSize);
 
@@ -49,15 +58,13 @@ public class PlayerMovement : MonoBehaviour
                 destino = nuevaPosicion;
                 enMovimiento = true;
 
-                // Activar animaciones
                 animator.SetBool("IsMoving", true);
                 animator.SetFloat("MoveX", direccion.x);
                 animator.SetFloat("MoveY", direccion.y);
             }
         }
 
-        // Detectar la acción de colocar bomba
-        if (Input.GetKeyDown(KeyCode.Space) && bombasColocadas < maxBombas)
+        if (Input.GetKeyDown(bombKey) && bombasColocadas < maxBombas)
         {
             ColocarBomba(transform.position);
         }
@@ -98,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
             GameObject bomba = Instantiate(bombaPrefab, posicion, Quaternion.identity);
             bombasColocadas++;
 
-            // Configurar la bomba para que llame a EliminarBomba al explotar
             BombaLogic bombaLogic = bomba.GetComponent<BombaLogic>();
             if (bombaLogic != null)
             {
@@ -112,6 +118,39 @@ public class PlayerMovement : MonoBehaviour
         bombasColocadas = Mathf.Max(0, bombasColocadas - 1);
     }
 
+    // ================== MÉTODOS PARA POWER-UPS ==================
+    public void AplicarSpeedBoost(float multiplicador, float duracion)
+    {
+        if (velocidadCoroutine != null)
+        {
+            StopCoroutine(velocidadCoroutine);
+        }
+        velocidad = velocidadOriginal * multiplicador;
+        velocidadCoroutine = StartCoroutine(RemoverSpeedBoost(duracion));
+    }
+
+    public void AplicarBombaBoost(int cantidad, float duracion)
+    {
+        if (bombasCoroutine != null)
+        {
+            StopCoroutine(bombasCoroutine);
+        }
+        maxBombas += cantidad;
+        bombasCoroutine = StartCoroutine(RemoverBombaBoost(cantidad, duracion));
+    }
+
+    public IEnumerator RemoverSpeedBoost(float duracion)
+    {
+        yield return new WaitForSeconds(duracion);
+        velocidad = velocidadOriginal;
+    }
+
+    public IEnumerator RemoverBombaBoost(int cantidad, float duracion)
+    {
+        yield return new WaitForSeconds(duracion);
+        maxBombas = Mathf.Max(maxBombasOriginal, maxBombas - cantidad);
+    }
+
     public void RecibirDaño(int cantidad)
     {
         salud -= cantidad;
@@ -121,51 +160,5 @@ public class PlayerMovement : MonoBehaviour
     private void MatarJugador()
     {
         Destroy(gameObject);
-    }
-
-    public void AumentarMaxBombas(int cantidad)
-    {
-        maxBombas += cantidad;
-        Debug.Log("Max bombas aumentado: " + maxBombas);
-    }
-
-    public void ReducirMaxBombas(int cantidad)
-    {
-        maxBombas -= cantidad;
-    }
-
-    public void AumentarVelocidad()
-    {
-        boostsRecogidos++;
-        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);
-        StartCoroutine(DesactivarVelocidad(5f));
-    }
-
-    IEnumerator DesactivarVelocidad(float tiempo)
-    {
-        yield return new WaitForSeconds(tiempo);
-        if (boostsRecogidos > 0)
-        {
-            boostsRecogidos--;
-            velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);
-        }
-    }
-
-    public void RestaurarVelocidad()
-    {
-        velocidad = velocidadBase * Mathf.Pow(2, boostsRecogidos);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("SpeedBoost"))
-        {
-            AumentarVelocidad();
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("BombaBoost"))
-        {
-            collision.gameObject.GetComponent<BombaBoost>().ActivarExtraBombs(gameObject);
-        }
     }
 }
