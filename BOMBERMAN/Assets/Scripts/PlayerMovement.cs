@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement; // Para reiniciar la escena
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -155,14 +156,23 @@ public class PlayerMovement : MonoBehaviour
         salud -= cantidad;
         if (salud <= 0)
         {
-            vidas--;
-            salud = 100;
-            ActualizarVidasUI();
+            PerderVida();
+        }
+    }
 
-            if (vidas <= 0)
-            {
-                MatarJugador();
-            }
+    public void PerderVida()
+    {
+        vidas--;
+        salud = 100;
+        ActualizarVidasUI();
+
+        if (vidas <= 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            ReiniciarNivel();
         }
     }
 
@@ -174,9 +184,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void MatarJugador()
+    private void ReiniciarNivel()
     {
-        Debug.Log("¡Jugador eliminado!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("¡GAME OVER!");
         Time.timeScale = 0;
     }
 }

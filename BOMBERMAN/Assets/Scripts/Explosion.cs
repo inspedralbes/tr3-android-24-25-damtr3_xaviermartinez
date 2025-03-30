@@ -60,20 +60,6 @@ public class Explosion : MonoBehaviour
             GameObject explosion = Instantiate(explosionPrefab, nuevaPos, rotacion);
             Destroy(explosion, 5f); // Destruir después de 5 segundos
 
-            // 4. Verificar colisión con jugadores
-            Collider2D[] jugadores = Physics2D.OverlapCircleAll(nuevaPos, 0.1f);
-            foreach (Collider2D jugador in jugadores)
-            {
-                if (jugador.CompareTag("Player"))
-                {
-                    PlayerMovement player = jugador.GetComponent<PlayerMovement>();
-                    if (player != null)
-                    {
-                        player.PerderVida(); // Reducir vida del jugador
-                    }
-                }
-            }
-
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -88,5 +74,18 @@ public class Explosion : MonoBehaviour
             return Quaternion.Euler(0, 0, 90);
         else
             return Quaternion.Euler(0, 0, -90);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Si colisiona con un jugador
+        if (other.CompareTag("Player"))
+        {
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player.PerderVida(); // Reducir vida
+            }
+        }
     }
 }
