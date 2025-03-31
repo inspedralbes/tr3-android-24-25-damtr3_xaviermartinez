@@ -194,4 +194,18 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("¡GAME OVER!");
         Time.timeScale = 0;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("SpeedBoost"))
+        {
+            AplicarSpeedBoost(2f, 5f);
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("BombaBoost"))
+        {
+            AplicarBombaBoost(1, 5f);
+            Destroy(other.gameObject);
+        }
+    }
 }
