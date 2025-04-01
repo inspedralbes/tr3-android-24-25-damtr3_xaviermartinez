@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
-using UnityEngine.SceneManagement; // Para reiniciar la escena
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -176,6 +176,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void MuerteInstantanea()
+    {
+        Debug.Log("Muerte Instantánea Activada");
+        Time.timeScale = 1;
+        vidas = 0;
+        ActualizarVidasUI();
+        StartCoroutine(ReiniciarConDelay());
+    }
+
+    private IEnumerator ReiniciarConDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private void ActualizarVidasUI()
     {
         if (textoVidas != null)
@@ -199,13 +214,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("SpeedBoost"))
         {
+            Debug.Log("SpeedBoost obtenido");
             AplicarSpeedBoost(2f, 5f);
             Destroy(other.gameObject);
         }
         else if (other.CompareTag("BombaBoost"))
         {
+            Debug.Log("BombaBoost obtenido");
             AplicarBombaBoost(1, 5f);
             Destroy(other.gameObject);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(AlinearAPosicion(transform.position), Vector3.one * gridSize);
     }
 }

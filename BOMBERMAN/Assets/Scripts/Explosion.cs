@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour
 {
     public GameObject explosionPrefab;
     public float tamañoCelda = 1f;
-    public int damage = 1; // Daño por explosión
+    public int damage = 1;
 
     [Header("Configuración de Tilemap")]
     public Tilemap destructibleTilemap;
@@ -22,7 +22,6 @@ public class Explosion : MonoBehaviour
 
     public void IniciarExplosion(Vector2 posicion, int radio, LayerMask capaObstaculos, LayerMask capaDestruible)
     {
-        // Explosión central
         GameObject explosionCentral = Instantiate(explosionPrefab, posicion, Quaternion.identity);
         Destroy(explosionCentral, 5f);
 
@@ -40,25 +39,22 @@ public class Explosion : MonoBehaviour
         {
             Vector2 nuevaPos = posicion + direccion * i * tamañoCelda;
 
-            // 1. Verificar obstáculos indestructibles
             if (Physics2D.OverlapCircle(nuevaPos, 0.1f, obstaculos))
             {
-                break; // Detener si hay un bloque indestructible
+                break;
             }
 
-            // 2. Verificar y destruir tile destruible
             Vector3Int tilePos = destructibleTilemap.WorldToCell(nuevaPos);
             TileBase tile = destructibleTilemap.GetTile(tilePos);
 
             if (tile == tileADestruir)
             {
-                destructibleTilemap.SetTile(tilePos, null); // Destruir el bloque
+                destructibleTilemap.SetTile(tilePos, null);
             }
 
-            // 3. Crear explosión visual en esta posición
             Quaternion rotacion = ObtenerRotacionSegunDireccion(direccion);
             GameObject explosion = Instantiate(explosionPrefab, nuevaPos, rotacion);
-            Destroy(explosion, 5f); // Destruir después de 5 segundos
+            Destroy(explosion, 5f);
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -78,14 +74,30 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Si colisiona con un jugador
+        Debug.Log($"Colisión detectada con: {other.gameObject.name} (Tag: {other.tag})");
+
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Jugador detectado en explosión");
             PlayerMovement player = other.GetComponent<PlayerMovement>();
             if (player != null)
             {
-                player.PerderVida(); // Reducir vida
+                player.MuerteInstantanea();
+            }
+            else
+            {
+                Debug.LogError("Componente PlayerMovement no encontrado");
             }
         }
     }
+
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
+    }
+
+
 }
