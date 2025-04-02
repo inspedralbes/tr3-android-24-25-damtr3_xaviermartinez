@@ -4,8 +4,7 @@ using UnityEngine.Networking;
 
 public class StatsManager : MonoBehaviour
 {
-    private string apiUrl = "http://localhost:3000/api/unity/stats"; // URL del backend
-
+    private string apiUrl = "http://localhost:3001/api/stats";
     void Start()
     {
         // Inicia la corrutina para enviar datos automáticamente después de X segundos
