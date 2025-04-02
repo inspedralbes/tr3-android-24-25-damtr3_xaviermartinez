@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SpeedBoost : MonoBehaviour
 {
-    public float multiplicador = 2f; // Velocidad x2
-    public float duracion = 5f;      // Duración del efecto
+    public float multiplicador = 2f;
+    public float duracion = 5f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,7 +13,7 @@ public class SpeedBoost : MonoBehaviour
             if (player != null)
             {
                 player.AplicarSpeedBoost(multiplicador, duracion);
-                Destroy(gameObject); // Destruye el power-up
+                Destroy(gameObject);
             }
         }
     }

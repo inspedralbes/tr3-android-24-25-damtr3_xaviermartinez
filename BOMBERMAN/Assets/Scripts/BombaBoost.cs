@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class BombaBoost : MonoBehaviour
 {
-    public int bombasExtra = 1;  // Bombas adicionales
-    public float duracion = 5f;   // Duración del efecto
+    public int bombasExtra = 1;
+    public float duracion = 5f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,7 +13,7 @@ public class BombaBoost : MonoBehaviour
             if (player != null)
             {
                 player.AplicarBombaBoost(bombasExtra, duracion);
-                Destroy(gameObject); // Destruye el power-up
+                Destroy(gameObject);
             }
         }
     }
