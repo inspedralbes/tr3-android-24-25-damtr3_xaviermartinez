@@ -9,30 +9,40 @@ public class AuthManager : MonoBehaviour
 
     public TMP_InputField usernameInput;
     public TMP_InputField passwordInput;
+    public TMP_InputField nameInput;  // Nuevo campo para el nombre
     public TextMeshProUGUI feedbackText; // Para mostrar mensajes de error o éxito
 
+    // Método para el registro
     public void Register()
     {
-        StartCoroutine(RegisterCoroutine(usernameInput.text, passwordInput.text));
+        StartCoroutine(RegisterCoroutine(usernameInput.text, passwordInput.text, nameInput.text)); // Enviar también el nombre
     }
 
+    // Método para el login
     public void Login()
     {
         StartCoroutine(LoginCoroutine(usernameInput.text, passwordInput.text));
     }
 
-    IEnumerator RegisterCoroutine(string username, string password)
+    // Coroutine para el registro
+    IEnumerator RegisterCoroutine(string username, string password, string name)
     {
-        string jsonData = $"{{\"username\":\"{username}\",\"password\":\"{password}\"}}";
+        Debug.Log("RegisterCoroutine");
+        Debug.Log(usernameInput.text);
+        Debug.Log(passwordInput.text);
+        Debug.Log(nameInput.text);
+
+        // Se agrega el nombre al JSON
+        string jsonData = $"{{\"username\":\"{username}\",\"password\":\"{password}\",\"name\":\"{name}\"}}";
         using (UnityWebRequest request = new UnityWebRequest(apiUrl + "/register", "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-
+            Debug.Log("VOY A MANDARME");
             yield return request.SendWebRequest();
-
+            Debug.Log("HE PASADO");
             if (request.result == UnityWebRequest.Result.Success)
             {
                 feedbackText.text = "Registro exitoso. ¡Ahora inicia sesión!";
@@ -44,6 +54,7 @@ public class AuthManager : MonoBehaviour
         }
     }
 
+    // Coroutine para el login
     IEnumerator LoginCoroutine(string username, string password)
     {
         string jsonData = $"{{\"username\":\"{username}\",\"password\":\"{password}\"}}";
