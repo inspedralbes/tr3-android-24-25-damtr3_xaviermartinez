@@ -23,7 +23,7 @@ public class Explosion : MonoBehaviour
     public void IniciarExplosion(Vector2 posicion, int radio, LayerMask capaObstaculos, LayerMask capaDestruible)
     {
         GameObject explosionCentral = Instantiate(explosionPrefab, posicion, Quaternion.identity);
-        Destroy(explosionCentral, 5f);
+        Destroy(explosionCentral, 3f);
 
         Vector2[] direcciones = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
 
@@ -54,7 +54,7 @@ public class Explosion : MonoBehaviour
 
             Quaternion rotacion = ObtenerRotacionSegunDireccion(direccion);
             GameObject explosion = Instantiate(explosionPrefab, nuevaPos, rotacion);
-            Destroy(explosion, 5f);
+            Destroy(explosion, 3f);
 
             yield return new WaitForSeconds(0.1f);
         }

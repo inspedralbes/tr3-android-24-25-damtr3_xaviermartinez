@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -9032710796148573376}
   - component: {fileID: 8496978740504630743}
   - component: {fileID: -5124889774527527348}
+  - component: {fileID: 8113821515332929186}
   m_Layer: 0
   m_Name: ExplosionPrefab
   m_TagString: Explosion
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3101660880517261494}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.465847, y: -6.957856, z: 0.52520436}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,3 +176,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8113821515332929186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101660880517261494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b64e97e8586f4640b624f98050724dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
+  playerTag: Player

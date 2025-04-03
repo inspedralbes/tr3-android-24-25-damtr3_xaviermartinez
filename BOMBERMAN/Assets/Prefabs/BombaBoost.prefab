@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e229e0bd7eace1419b48aa80dad97e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombasExtra: 1
   duracion: 5
-  aumentoBombas: 1
 --- !u!50 &-7896694389341213275
 Rigidbody2D:
   serializedVersion: 5

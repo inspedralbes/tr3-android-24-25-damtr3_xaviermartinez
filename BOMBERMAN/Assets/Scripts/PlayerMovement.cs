@@ -114,6 +114,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void PerderVida(int vidaPerdida)
+    {
+        vidas -= vidaPerdida;
+    }
+
     public void EliminarBomba()
     {
         bombasColocadas = Mathf.Max(0, bombasColocadas - 1);
@@ -224,7 +229,13 @@ public class PlayerMovement : MonoBehaviour
             AplicarBombaBoost(1, 5f);
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("Explosion"))
+        {
+            Debug.Log("Tocada una explosion");
+        }
     }
+
+    
 
     private void OnDrawGizmos()
     {
